@@ -63,11 +63,18 @@ a {
   z-index: 2;
   top: 32px;
   right: max(7.5vw, 64px);
-  display: flex;
-  gap: clamp(24px, 4vw, 64px);
   font-family: var(--serif-note);
   font-size: 25px;
   line-height: 1;
+}
+
+.site-nav-links {
+  display: flex;
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.site-nav-toggle {
+  display: none;
 }
 
 .site-nav a {
@@ -132,6 +139,12 @@ a {
   grid-row: 1 / span 2;
   width: min(100%, 400px);
   margin: 16px 0 0 auto;
+}
+
+@media (min-width: 901px) {
+  .hero-collage {
+    margin-right: clamp(96px, 12vw, 180px);
+  }
 }
 
 .hero-collage-stage {
@@ -231,18 +244,21 @@ a {
   bottom: auto;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   margin: 0;
   transform: translateX(-50%);
 }
 
 .little-sir-bubble {
   position: relative;
+  z-index: 1;
   display: grid;
   flex: 0 0 240px;
   width: 240px;
   height: 102px;
   place-items: center;
+  border-radius: 50%;
+  background: var(--paper);
   transform: rotate(-7deg);
 }
 
@@ -265,8 +281,10 @@ a {
 
 .little-sir-video {
   position: relative;
+  z-index: 0;
   flex: 0 0 161px;
   height: 227px;
+  margin-left: -38px;
   object-fit: contain;
 }
 
@@ -702,16 +720,30 @@ a {
 }
 
 .skill-group li,
-.skill-group p {
+.skill-group p,
+.skill-group a {
   margin: 0;
   font-size: 14px;
   line-height: 1.7;
 }
 
 .skill-group.language {
-  grid-column: 1 / -1;
+  grid-column: 1;
+  grid-row: 2;
   width: min(100%, 360px);
   margin-left: 18%;
+}
+
+.skill-group.graphic-work {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  margin: 56px 0 0;
+  text-align: left;
+}
+
+.skill-group.graphic-work a {
+  display: block;
 }
 
 .site-footer {
@@ -809,6 +841,45 @@ a {
     gap: 12px;
   }
 
+  .lundbeck-grid {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    justify-items: start;
+    gap: 34px;
+  }
+
+  .lundbeck-grid .project,
+  .lundbeck-grid figcaption {
+    text-align: left;
+  }
+
+  .lundbeck-grid .project-image {
+    display: block;
+    width: min(100%, 550px);
+    height: auto;
+    margin-left: 0;
+    aspect-ratio: 0.8 / 1;
+    object-fit: cover;
+  }
+
+  .lundbeck-ceo {
+    order: 1;
+  }
+
+  .lundbeck-scientist {
+    order: 2;
+  }
+
+  .lundbeck-battle {
+    order: 3;
+    margin-top: 0;
+  }
+
+  .lundbeck-battle .project-image {
+    max-height: none;
+    aspect-ratio: 16 / 9;
+  }
+
   .about-inner {
     column-gap: 5%;
   }
@@ -840,12 +911,64 @@ a {
   }
 
   .site-nav {
-    top: 25px;
+    top: 18px;
     right: 12.5%;
-    display: grid;
-    justify-items: end;
-    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     font-size: 17px;
+  }
+
+  .site-nav-toggle {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    padding: 10px 7px;
+    align-content: center;
+    gap: 5px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .site-nav-toggle span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition:
+      transform 160ms ease,
+      opacity 160ms ease;
+  }
+
+  .site-nav-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .site-nav-links {
+    display: none;
+    justify-items: end;
+    gap: 12px;
+    padding: 10px 0 0;
+  }
+
+  .site-nav.is-open .site-nav-links {
+    display: grid;
+  }
+
+  .site-nav.is-open .site-nav-toggle span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .site-nav.is-open .site-nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-nav.is-open .site-nav-toggle span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   .hero-heading {
@@ -875,7 +998,7 @@ a {
     align-self: flex-end;
     min-width: 0;
     width: 65%;
-    margin: -8px -7% 8px 0;
+    margin: -8px 0 8px 0;
     transform: none;
   }
 
@@ -907,7 +1030,8 @@ a {
     position: static;
     align-self: flex-start;
     width: 100%;
-    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-wrap: nowrap;
     gap: 4px;
     order: 4;
     margin: 26px 0 0 -10px;
@@ -915,20 +1039,21 @@ a {
   }
 
   .little-sir-bubble {
-    flex: 0 1 240px;
-    width: min(100%, 240px);
+    flex: 0 0 62%;
+    width: 62%;
     height: auto;
     aspect-ratio: 240 / 102;
-    max-width: 100%;
   }
 
   .little-sir-bubble blockquote {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .little-sir-video {
-    flex: 0 0 161px;
-    height: 227px;
+    flex: 0 0 34%;
+    width: 34%;
+    height: auto;
+    aspect-ratio: 161 / 227;
   }
 
   .section {
@@ -1020,6 +1145,26 @@ a {
   .lundbeck {
     padding-top: 6px;
     padding-bottom: 64px;
+    text-align: left;
+  }
+
+  .lundbeck .section-heading,
+  .lundbeck .section-heading p,
+  .lundbeck-grid,
+  .lundbeck-grid .project,
+  .lundbeck-grid figcaption {
+    text-align: left;
+  }
+
+  .lundbeck-grid {
+    align-items: start;
+    justify-items: stretch;
+  }
+
+  .lundbeck-grid .project-image {
+    display: block;
+    margin-right: auto;
+    margin-left: 0;
   }
 
   .lundbeck-battle {
@@ -1147,14 +1292,26 @@ a {
   }
 
   .skill-group li,
-  .skill-group p {
+  .skill-group p,
+  .skill-group a {
     font-size: 11px;
     line-height: 1.65;
   }
 
   .skill-group.language {
+    grid-column: 1 / -1;
+    grid-row: auto;
     width: 100%;
     margin-left: 14%;
+  }
+
+  .skill-group.graphic-work {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: center;
+    margin-top: 32px;
+    margin-left: 0;
+    text-align: center;
   }
 
   .site-footer {

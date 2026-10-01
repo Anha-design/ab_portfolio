@@ -20,9 +20,22 @@
   <body>
     <header class="hero" id="top">
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="#animations">Animations</a>
-        <a href="#video">Video</a>
-        <a href="#about">About</a>
+        <button
+          class="site-nav-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="site-nav-links"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="site-nav-links" id="site-nav-links">
+          <a href="#animations">Animations</a>
+          <a href="#video">Video</a>
+          <a href="#about">About</a>
+        </div>
       </nav>
 
       <div class="hero-heading">
@@ -68,6 +81,7 @@
         <p>
           Little Sir and I have dipped our toes into storytelling, visual
           communication and motion design.<br />
+          <br />
           We enjoy turning ideas into visual concepts and exploring how visual
           design can communicate clearly and create meaningful experiences.
         </p>
@@ -468,7 +482,7 @@
               />
               <h3>
                 Skills<img
-                  src="assets/understregning.svg"
+                  src="assets/understregning-about.svg"
                   alt=""
                   aria-hidden="true"
                 />
@@ -484,7 +498,7 @@
             <div class="skill-group programs">
               <h3>
                 Programs<img
-                  src="assets/understregning.svg"
+                  src="assets/understregning-about.svg"
                   alt=""
                   aria-hidden="true"
                 />
@@ -500,7 +514,7 @@
             <div class="skill-group language">
               <h3>
                 Language<img
-                  src="assets/understregning.svg"
+                  src="assets/understregning-about.svg"
                   alt=""
                   aria-hidden="true"
                 />
@@ -509,6 +523,22 @@
                 Native Danish speaker with fluent English and confidence working
                 in English-speaking environments.
               </p>
+            </div>
+            <div class="skill-group graphic-work">
+              <h3>
+                Graphic work<img
+                  src="assets/understregning-about.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </h3>
+              <a
+                href="https://annebethfaurby.wixsite.com/littlesir"
+                target="_blank"
+                rel="noreferrer"
+              >
+                annebethfaurby.wixsite.com/littlesir
+              </a>
             </div>
           </div>
         </div>
@@ -534,6 +564,32 @@
       </div>
     </footer>
     <script>
+      const nav = document.querySelector(".site-nav");
+      const navToggle = document.querySelector(".site-nav-toggle");
+
+      const closeNav = () => {
+        nav.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open navigation menu");
+      };
+
+      navToggle.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("is-open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navToggle.setAttribute(
+          "aria-label",
+          isOpen ? "Close navigation menu" : "Open navigation menu",
+        );
+      });
+
+      nav.querySelectorAll(".site-nav-links a").forEach((link) => {
+        link.addEventListener("click", closeNav);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeNav();
+      });
+
       const videos = [...document.querySelectorAll("video")];
 
       videos.forEach((video) => {
